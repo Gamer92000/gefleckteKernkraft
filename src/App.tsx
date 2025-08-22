@@ -4,7 +4,7 @@ import ExPause from './pages/exPause/index.jsx';
 import SetPause from './pages/setPause/index.jsx';
 
 import './App.css';
-import { useState } from 'react';
+import {useState} from 'react';
 import Ready from './pages/ready/index.jsx';
 import Timer from './pages/timer/index.jsx';
 
@@ -20,10 +20,12 @@ enum STEP {
 
 export function App() {
   const [step, setStep] = useState<STEP>(STEP.NSETS);
+  const platform = NativeModules.NativeBridgeModule.getPlatform()
+  const mobile = platform === 'mobile'
 
   return (
-    <view>
-      <view className="App">
+    <view className="App">
+      <view className={ mobile ? "wrapper-mobile" : "wrapper-wear" }>
         {step === STEP.NSETS && (
           <NSets
             continue={() => {

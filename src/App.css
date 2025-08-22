@@ -17,6 +17,16 @@
   background-color: #141218;
 }
 
+.wrapper-mobile {
+    height: 100vh;
+    padding-top: 200px; /* avoid front camera and other display occlusions  */
+    padding-bottom: 10px; /* avoid nav bar pill */
+}
+
+.wrapper-wear {
+    height: 100vh;
+}
+
 text {
   /* biome-ignore lint/a11y/useGenericFontNames: The font is explicitly loaded */
   font-family: "Roboto Condensed";
