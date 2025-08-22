@@ -23,3 +23,4 @@ rootProject.name = "Gefleckte Kernkraft"
 
 include(":app:wear")
 include(":app:mobile")
+include(":app:lib")

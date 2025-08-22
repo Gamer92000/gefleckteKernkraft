@@ -10,6 +10,7 @@ import com.lynx.service.http.LynxHttpService
 import com.lynx.service.image.LynxImageService
 import com.lynx.service.log.LynxLogService
 import com.lynx.tasm.service.LynxServiceCenter
+import imhof.cloud.geflecktekernkraft.NativeBridgeModule
 
 class KernkraftApp : Application() {
     override fun onCreate() {
@@ -36,6 +37,6 @@ class KernkraftApp : Application() {
             null,
             null
         )
-        LynxEnv.inst().registerModule("NativeBridgeModule", NativeBridgeModule::class.java )
+        LynxEnv.inst().registerModule("NativeBridgeModule", NativeBridgeModule::class.java)
     }
 }

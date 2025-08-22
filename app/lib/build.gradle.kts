@@ -1,28 +1,23 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
 }
 
 android {
-    namespace = "cloud.imhof.geflecktekernkraft"
+    namespace = "imhof.cloud.geflecktekernkraft"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "cloud.imhof.geflecktekernkraft"
         minSdk = 33
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -35,6 +30,14 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+
 
     implementation(libs.play.services.wearable)
     // lynx dependencies
@@ -60,7 +63,4 @@ dependencies {
     implementation(libs.lynx.service.http)
 
     implementation(libs.okhttp)
-
-    // shared lib
-    implementation(project(":app:lib"))
 }

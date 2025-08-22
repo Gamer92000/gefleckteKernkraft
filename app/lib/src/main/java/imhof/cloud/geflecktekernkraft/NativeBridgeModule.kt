@@ -1,8 +1,9 @@
-package cloud.imhof.geflecktekernkraft
+package imhof.cloud.geflecktekernkraft
 
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.pm.PackageManager
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
@@ -40,6 +41,15 @@ class NativeBridgeModule(context: Context) : LynxModule(context) {
     fun unsetInhibitor() {
         runOnUiThread {
             getActivity(mContext)?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+    }
+
+    @LynxMethod
+    fun getPlatform(): String {
+        return if (mContext.packageManager.hasSystemFeature(PackageManager.FEATURE_WATCH)) {
+            "watch"
+        } else {
+            "mobile"
         }
     }
 

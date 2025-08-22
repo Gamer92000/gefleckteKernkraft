@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "cloud.imhof.geflecktekernkraft"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "cloud.imhof.geflecktekernkraft"
         minSdk = 33
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -60,4 +60,7 @@ dependencies {
     implementation(libs.lynx.service.http)
 
     implementation(libs.okhttp)
+
+    // shared lib
+    implementation(project(":app:lib"))
 }
