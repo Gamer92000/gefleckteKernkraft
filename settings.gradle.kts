@@ -20,5 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Gefleckte Kernkraft"
-include(":app")
- 
+include(":app:wear")

@@ -21,13 +21,17 @@ local.properties
 *.log*
 
 # Dist
-node_modules
+/node_modules
 dist/
+build/
 
 # IDE
 .vscode/*
 !.vscode/extensions.json
 .idea
 
-# exclude binary
-app/src/main/assets/main.lynx.bundle
+# lynx bundle
+main.lynx.bundle
+
+# pnpm
+pnpm-workspace.yaml
