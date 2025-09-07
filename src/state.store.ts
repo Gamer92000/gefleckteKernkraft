@@ -17,7 +17,7 @@ const MIN_SET_PAUSE = 5;
 const MAX_SET_PAUSE = 300;
 const STEP_SET_PAUSE = 5;
 
-export const EXERCISES = ['🪵', '🍌', '🇷🇺🔀', '🦵🆙', '🌉⏸️', '🇱🪑'];
+export const EXERCISES = ['🍌', '🪵', '🇷🇺🔀', '🦵🆙', '🌉⏸️', '🇱🪑'];
 
 export const useStateStore = create(
   combine(
