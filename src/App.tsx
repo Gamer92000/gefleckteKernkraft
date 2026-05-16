@@ -22,23 +22,27 @@ enum STEP {
 
 export function App() {
   const [step, setStep] = useState<STEP>(STEP.PLAN);
-  const platform = NativeModules.NativeBridgeModule.getPlatform();
+  const platform = __BACKGROUND__
+    ? NativeModules.NativeBridgeModule.getPlatform()
+    : 'mobile';
   const mobile = platform === 'mobile';
 
-  lynx.registerModule('backHandler', {
-    back: () => {
-      setStep((current) => {
-        if (current === STEP.PLAN) {
-          NativeModules.NativeBridgeModule.exitApp();
+  if (__BACKGROUND__) {
+    lynx.registerModule('backHandler', {
+      back: () => {
+        setStep((current) => {
+          if (current === STEP.PLAN) {
+            NativeModules.NativeBridgeModule.exitApp();
+            return current;
+          }
+          if (current <= STEP.READY) {
+            return (current - 1) as STEP;
+          }
           return current;
-        }
-        if (current <= STEP.READY) {
-          return (current - 1) as STEP;
-        }
-        return current;
-      });
-    },
-  });
+        });
+      },
+    });
+  }
 
   return (
     <view className="App">

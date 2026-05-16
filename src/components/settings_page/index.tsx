@@ -10,14 +10,16 @@ interface SettingsPageProps {
 }
 
 export default function SettingsPage(props: SettingsPageProps) {
-  lynx.registerModule('scrollHandler', {
-    up: () => {
-      props.increase();
-    },
-    down: () => {
-      props.decrease();
-    },
-  });
+  if (__BACKGROUND__) {
+    lynx.registerModule('scrollHandler', {
+      up: () => {
+        props.increase();
+      },
+      down: () => {
+        props.decrease();
+      },
+    });
+  }
 
   return (
     <view className="wrapper">

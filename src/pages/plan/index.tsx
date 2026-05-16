@@ -11,14 +11,16 @@ export default function PlanPicker(props: PlanProps) {
   const nextPlan = useStateStore((state) => state.nextPlan);
   const prevPlan = useStateStore((state) => state.prevPlan);
 
-  lynx.registerModule('scrollHandler', {
-    up: () => {
-      nextPlan();
-    },
-    down: () => {
-      prevPlan();
-    },
-  });
+  if (__BACKGROUND__) {
+    lynx.registerModule('scrollHandler', {
+      up: () => {
+        nextPlan();
+      },
+      down: () => {
+        prevPlan();
+      },
+    });
+  }
 
   const plan = PLANS[planIdx];
 
