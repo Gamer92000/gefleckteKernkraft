@@ -7,6 +7,8 @@ import androidx.core.view.InputDeviceCompat
 import androidx.core.view.MotionEventCompat
 import com.lynx.tasm.LynxView
 import com.lynx.tasm.LynxViewBuilder
+import com.lynx.tasm.provider.LynxProviderRegistry
+import imhof.cloud.geflecktekernkraft.FontResourceProvider
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +41,7 @@ class MainActivity : Activity() {
     private fun buildLynxView(): LynxView {
         val viewBuilder = LynxViewBuilder()
         viewBuilder.setTemplateProvider(TemplateProvider(this))
+        viewBuilder.setResourceProvider(LynxProviderRegistry.LYNX_PROVIDER_TYPE_FONT, FontResourceProvider())
         return viewBuilder.build(this)
     }
 }
