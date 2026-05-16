@@ -45,6 +45,13 @@ class NativeBridgeModule(context: Context) : LynxModule(context) {
     }
 
     @LynxMethod
+    fun exitApp() {
+        runOnUiThread {
+            getActivity(mContext)?.finish()
+        }
+    }
+
+    @LynxMethod
     fun getPlatform(): String {
         return if (mContext.packageManager.hasSystemFeature(PackageManager.FEATURE_WATCH)) {
             "watch"

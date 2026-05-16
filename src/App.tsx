@@ -23,6 +23,21 @@ export function App() {
   const platform = NativeModules.NativeBridgeModule.getPlatform()
   const mobile = platform === 'mobile'
 
+  lynx.registerModule('backHandler', {
+    back: () => {
+      setStep((current) => {
+        if (current === STEP.NSETS) {
+          NativeModules.NativeBridgeModule.exitApp();
+          return current;
+        }
+        if (current <= STEP.READY) {
+          return (current - 1) as STEP;
+        }
+        return current;
+      });
+    },
+  });
+
   return (
     <view className="App">
       <view className={ mobile ? "wrapper-mobile" : "wrapper-wear" }>

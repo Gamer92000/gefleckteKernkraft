@@ -9,9 +9,11 @@ import com.lynx.tasm.LynxView
 import com.lynx.tasm.LynxViewBuilder
 
 class MainActivity : Activity() {
+    private lateinit var lynxView: LynxView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val lynxView = buildLynxView()
+        lynxView = buildLynxView()
         runOnUiThread {
             lynxView.setOnGenericMotionListener{ _, ev ->
                 if (ev.action == MotionEvent.ACTION_SCROLL &&
@@ -34,6 +36,11 @@ class MainActivity : Activity() {
         setContentView(lynxView)
         val uri = "main.lynx.bundle"
         lynxView.renderTemplateUrl(uri, "")
+    }
+
+    @Deprecated("Handled by JS via backHandler module")
+    override fun onBackPressed() {
+        lynxView.getJSModule("backHandler").fire("back", null)
     }
 
     private fun buildLynxView(): LynxView {
