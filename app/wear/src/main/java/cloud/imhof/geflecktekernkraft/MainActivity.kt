@@ -3,6 +3,7 @@ package cloud.imhof.geflecktekernkraft
 import android.app.Activity
 import android.os.Bundle
 import android.view.MotionEvent
+import android.window.OnBackInvokedDispatcher
 import androidx.core.view.InputDeviceCompat
 import androidx.core.view.MotionEventCompat
 import com.lynx.tasm.LynxView
@@ -34,6 +35,11 @@ class MainActivity : Activity() {
             lynxView.requestFocus()
         }
         setContentView(lynxView)
+        onBackInvokedDispatcher.registerOnBackInvokedCallback(
+            OnBackInvokedDispatcher.PRIORITY_DEFAULT,
+        ) {
+            lynxView.getJSModule("backHandler").fire("back", null)
+        }
         val uri = "main.lynx.bundle"
         lynxView.renderTemplateUrl(uri, "")
     }
