@@ -17,11 +17,22 @@ const MIN_SET_PAUSE = 5;
 const MAX_SET_PAUSE = 300;
 const STEP_SET_PAUSE = 5;
 
-export const EXERCISES = ['🍌', '🪵', '🇷🇺🔀', '🦵🆙', '🌉⏸️', '🇱🪑'];
+export interface Plan {
+  name: string;
+  exercises: string[];
+}
+
+export const PLANS: Plan[] = [
+  {
+    name: 'Default',
+    exercises: ['🍌', '🪵', '🇷🇺🔀', '🦵🆙', '🌉⏸️', '🇱🪑'],
+  },
+];
 
 export const useStateStore = create(
   combine(
     {
+      planIdx: 0,
       nSets: 3,
       exTime: 30,
       exPause: 30,
@@ -47,9 +58,11 @@ export const useStateStore = create(
           result.countdown_value = state.countdown_value - 1;
 
           switch (result.countdown_value) {
-            case 3: case 2: case 1:
+            case 3:
+            case 2:
+            case 1:
               NativeModules.NativeBridgeModule.vibrate(false);
-            break;
+              break;
             case 0:
               NativeModules.NativeBridgeModule.vibrate(true);
           }
@@ -62,14 +75,17 @@ export const useStateStore = create(
             } else {
               result.pause = true;
               if (
-                state.exercise === EXERCISES.length - 1 &&
+                state.exercise === PLANS[state.planIdx].exercises.length - 1 &&
                 state.set_number === state.nSets - 1
               ) {
                 result.exercise = -1;
                 result.countdown_value = 3;
                 result.set_number = 0;
                 result.finished = true;
-              } else if (state.exercise === EXERCISES.length - 1) {
+              } else if (
+                state.exercise ===
+                PLANS[state.planIdx].exercises.length - 1
+              ) {
                 result.countdown_value = state.setPause;
                 result.exercise = -1;
                 result.set_number = state.set_number + 1;
@@ -82,6 +98,14 @@ export const useStateStore = create(
           return result;
         }),
       reset: () => set((state) => ({ finished: false })),
+      prevPlan: () =>
+        set((state) => ({
+          planIdx: (state.planIdx - 1 + PLANS.length) % PLANS.length,
+        })),
+      nextPlan: () =>
+        set((state) => ({
+          planIdx: (state.planIdx + 1) % PLANS.length,
+        })),
       lessSets: () =>
         set((state) => ({
           nSets: Math.max(MIN_SETS, state.nSets - STEP_SETS),

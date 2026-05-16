@@ -1,15 +1,17 @@
-import NSets from './pages/nSets/index.jsx';
-import ExTime from './pages/exTime/index.jsx';
 import ExPause from './pages/exPause/index.jsx';
+import ExTime from './pages/exTime/index.jsx';
+import NSets from './pages/nSets/index.jsx';
 import SetPause from './pages/setPause/index.jsx';
 
 import './App.css';
-import {useState} from 'react';
+import { useState } from 'react';
+import PlanPicker from './pages/plan/index.jsx';
 import Ready from './pages/ready/index.jsx';
 import Timer from './pages/timer/index.jsx';
 
 // biome-ignore lint/style/useEnumInitializers: <explanation>
 enum STEP {
+  PLAN,
   NSETS,
   EXTIME,
   EXPAUSE,
@@ -19,14 +21,14 @@ enum STEP {
 }
 
 export function App() {
-  const [step, setStep] = useState<STEP>(STEP.NSETS);
-  const platform = NativeModules.NativeBridgeModule.getPlatform()
-  const mobile = platform === 'mobile'
+  const [step, setStep] = useState<STEP>(STEP.PLAN);
+  const platform = NativeModules.NativeBridgeModule.getPlatform();
+  const mobile = platform === 'mobile';
 
   lynx.registerModule('backHandler', {
     back: () => {
       setStep((current) => {
-        if (current === STEP.NSETS) {
+        if (current === STEP.PLAN) {
           NativeModules.NativeBridgeModule.exitApp();
           return current;
         }
@@ -40,7 +42,14 @@ export function App() {
 
   return (
     <view className="App">
-      <view className={ mobile ? "wrapper-mobile" : "wrapper-wear" }>
+      <view className={mobile ? 'wrapper-mobile' : 'wrapper-wear'}>
+        {step === STEP.PLAN && (
+          <PlanPicker
+            continue={() => {
+              setStep(STEP.NSETS);
+            }}
+          />
+        )}
         {step === STEP.NSETS && (
           <NSets
             continue={() => {
@@ -79,7 +88,7 @@ export function App() {
         {step === STEP.TIMER && (
           <Timer
             done={() => {
-              setStep(STEP.NSETS);
+              setStep(STEP.PLAN);
             }}
           />
         )}
